@@ -11,11 +11,13 @@ const parse = (sourceCode, opts) => {
   const versionLT120 = variableName ?? 'texture';
 
   const polyfillCode = `
+// #glsl-polyfill-loader start: texture
 #if __VERSION__ > 120
 #define ${versionGT120} texture
 #else
 #define ${versionLT120} texture2D
 #endif
+// #glsl-polyfill-loader end: texture
 `;
 
   const lines = sourceCode.split('\n');
