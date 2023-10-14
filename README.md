@@ -17,7 +17,7 @@ or
 
 ## polyfill-list
 
-[doc](./src/index.js)
+[doc](./src/polyfill/index.js)
 
 ## usage
 
