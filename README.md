@@ -5,30 +5,21 @@
   </a>
 </div>
 
-# glsl-module-loader
+# glsl-polyfill-loader
 
-A loader for webpack that allows parse glsl what is contain `#include <./utils.glsl>`.
+## install
 
-- `#include <./utils.glsl>`
-- `#include <./utils>`
-- `#include <glsl-noise/simplex/3d>`
-- `#include <glsl-noise/simplex/3d.glsl>`
-
-## Getting Started
-
-To begin, you'll need to install `glsl-module-loader`:
-
-```console
-$ npm install glsl-module-loader raw-loader -D
-```
+`npm i raw-loader glsl-polyfill-loader -D`
 
 or
 
-```console
-$ yarn add glsl-module-loader raw-loader -D
-```
+`yarn global add raw-loader glsl-polyfill-loader -D`
 
-Then add the loader to your `webpack` config. For example:
+## polyfill-list
+
+[doc](./src/index.js)
+
+## usage
 
 **file.js**
 
@@ -47,7 +38,7 @@ module.exports = {
         test: /\.glsl$/i,
         use: [
           'raw-loader',
-          'glsl-module-loader',
+          'glsl-polyfill-loader',
         ],
       },
     ],
@@ -55,7 +46,34 @@ module.exports = {
 };
 ```
 
-you also can use `glsl-module-loader` with [`glslify-loader`](https://github.com/glslify/glslify-loader):
+you also define options:
+
+```js
+// webpack.config.js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.glsl$/i,
+        use: [
+          'raw-loader',
+          ['glsl-polyfill-loader', {
+            config: {
+              // about polyfill `texture` and define options of polyfill `texture`
+              'texture': {
+                variableName: 'TEXTURE2D',
+              },
+            },
+            disablePolyfill: ['xxx'],
+          }],
+        ],
+      },
+    ],
+  },
+};
+```
+
+you also can use `glsl-module-loader` with [`glslify-loader`](https://github.com/glslify/glslify-loader) and [`glslify-module-loader`](https://github.com/z-juln/glslify-module-loader):
 
 ```js
 // webpack.config.js
@@ -68,6 +86,7 @@ module.exports = {
           'raw-loader',
           'glslify-loader',
           'glsl-module-loader',
+          'glsl-polyfill-loader',
         ],
       },
     ],
@@ -81,10 +100,10 @@ And run `webpack` via your preferred method.
 
 ### project
 
-- [glsl-module-loader-example](https://github.com/z-juln/glsl-module-loader-example)
+- [glsl-polyfill-loader-example](https://github.com/z-juln/glsl-polyfill-loader-example)
 
 ### Inline
 
 ```js
-import glsl from 'glsl-module-loader!./utils.glsl';
+import glsl from 'glsl-polyfill-loader!./utils.glsl';
 ```

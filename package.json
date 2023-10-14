@@ -1,6 +1,6 @@
 {
   "name": "glsl-polyfill-loader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "glsl polyfill webpack loader",
   "repository": {
     "url": "https://github.com/z-juln/glsl-polyfill-loader"

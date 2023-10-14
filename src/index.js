@@ -3,12 +3,19 @@ import polyfillList from './polyfill';
 
 /**
  * @param {string} sourceCode 
- * @param {Record<string, any>} opts
+ * @param {{ config: Record<string, any>; usePolyfill?: string[]; disablePolyfill?: string[]; }} options
  */
-const parseCode = (sourceCode, opts) => polyfillList.reduce((code, polyfill) => {
-  const polyfillOpts = opts[polyfill.name];
-  return polyfill.parse(code, polyfillOpts);
-}, sourceCode);
+const parseCode = (sourceCode, options) => {
+  const { config: polyfillOpts, usePolyfill, disablePolyfill } = options ?? {};
+  const useAllPolyfill = !usePolyfill?.length;
+  const userPolyfillList = useAllPolyfill
+    ? polyfillList
+    : polyfillList.filter(p => usePolyfill.includes(p)).filter(p => !disablePolyfill?.includes(p));
+  return userPolyfillList.reduce((code, polyfill) => {
+    const thisPolyfillOpts = polyfillOpts?.[polyfill.name];
+    return polyfill.parse(code, thisPolyfillOpts);
+  }, sourceCode);
+}
 
 export default function glslModuleLoader(source) {
   this.cacheable?.();
