@@ -84,9 +84,9 @@ module.exports = {
         test: /\.glsl$/i,
         use: [
           'raw-loader',
+          'glsl-polyfill-loader',
           'glslify-loader',
           'glsl-module-loader',
-          'glsl-polyfill-loader',
         ],
       },
     ],

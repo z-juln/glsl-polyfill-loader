@@ -1,6 +1,8 @@
+import texture from './texture';
+
 /** @type {{ name: string; parse: (sourceCode: string, opts?: any) => string; }[]} */
 const polyfillList = [
-  require('./texture'),
+  texture,
 ];
 
 export default polyfillList;
